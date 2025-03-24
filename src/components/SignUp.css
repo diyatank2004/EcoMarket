@@ -1,0 +1,42 @@
+.signup-page {
+  background-color: #f7f9fc;
+  padding: 2rem;
+}
+
+.signup-image {
+  border-radius: 10px;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+.form-container {
+  border-color: transparent !important; /* This will remove the color */
+  border-width: 1px;
+}
+
+.form-container {
+  width: 100%;
+  max-width: 400px;
+  background-color: #ffffff;
+  border-radius: 10px;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+h3 {
+  font-size: 1.75rem;
+  color: #333333;
+}
+
+.btn-primary {
+  justify-content: center;
+  background-color: #00b7ff;
+  border-color: #007bff;
+}
+
+.btn-primary:hover {
+  background-color: #000000;
+  border-color: #000000;
+}
+
+p {
+  font-size: 0.875rem;
+}
