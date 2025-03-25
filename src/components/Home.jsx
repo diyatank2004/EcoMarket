@@ -1,26 +1,47 @@
 import React from 'react';
-import { Link } from 'react-router-dom';
+import './Home.css'; 
 
 function Home() {
   return (
-    <div className="container mt-5">
-      <div className="jumbotron text-center">
-        <h1>Welcome to EcoMarket</h1>
-        <p>Your destination for eco-friendly products</p>
-        <Link to="/shop" className="btn btn-primary">Shop Now</Link>
-      </div>
-      <div className="row mt-4">
-        <div className="col-md-4">
-          <div className="card">
-            <img src="product1.jpg" className="card-img-top" alt="Product 1" />
-            <div className="card-body">
-              <h5 className="card-title">Eco-Friendly Product 1</h5>
-              <p className="card-text">$25.00</p>
-              <Link to="/product/1" className="btn btn-success">View Details</Link>
-            </div>
-          </div>
+    <div className="home">
+      <header className="header">
+        <h1 className="logo">Handmade Goods</h1>
+        <p className="tagline">Eco-Friendly Products</p>
+        <div className="header-buttons">
+          <button className="header-btn">Add to Cart</button>
+          <button className="header-btn">More Products</button>
         </div>
-      </div>
+      </header>
+
+      <section className="featured">
+        <img src="featured-image.png" alt="Featured Product" className="featured-img" />
+        <div className="featured-description">
+          <h2>Eco-Friendly Handcrafted Items</h2>
+          <button className="featured-btn">Shop Now</button>
+        </div>
+      </section>
+
+      <section className="products">
+        <h2 className="product-title">Products</h2>
+        <div className="product-grid">
+          <div className="product-card">
+            <img src="product1.png" alt="Product 1" />
+            <h3>Product Name</h3>
+            <button className="add-to-cart">Add to Cart</button>
+          </div>
+
+          <div className="product-card">
+            <img src="product2.png" alt="Product 2" />
+            <h3>Product Name</h3>
+            <button className="add-to-cart">Add to Cart</button>
+          </div>
+
+        </div>
+      </section>
+
+      <footer className="footer">
+        <p>&copy; 2025 Handmade Goods. All rights reserved.</p>
+      </footer>
     </div>
   );
 }

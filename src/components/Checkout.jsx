@@ -1,5 +1,6 @@
 import React from 'react';
 
+//Demo checkout
 function Checkout() {
   return (
     <div className="container mt-5">

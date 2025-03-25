@@ -1,5 +1,6 @@
 import React from 'react';
 
+// Demo cart
 function Cart() {
   return (
     <div className="container mt-5">

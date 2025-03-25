@@ -40,3 +40,99 @@ h3 {
 p {
   font-size: 0.875rem;
 }
+
+.signin-container {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-evenly;
+  align-items: center;
+  height: 100vh; 
+  background-color: #f8f9fa; 
+  padding: 20px;
+}
+
+.signin-box {
+  flex: 1;
+  max-width: 500px;
+  padding: 40px 30px;
+  background-color: #ffffff;
+  border-radius: 15px; /* Rounded corners */
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Light shadow */
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+
+.signin-box h2 {
+  font-size: 30px;
+  font-weight: 600;
+  color: #343a40;
+  margin-bottom: 20px;
+  text-align: center;
+}
+
+.signin-box .form-group {
+  margin-bottom: 20px;
+}
+
+.signin-box .form-control {
+  padding: 12px;
+  border-radius: 8px;
+  border: 1px solid #ced4da; 
+  font-size: 16px;
+  transition: all 0.3s ease;
+}
+
+.signin-box .form-control:hover,
+.signin-box .form-control:focus {
+  border-color: #007bff;
+  box-shadow: 0 0 5px rgba(0, 123, 255, 0.2);
+}
+
+.btn-block {
+  width: 100%;
+  padding: 12px;
+  font-size: 16px;
+  background-color: #007bff;
+  border: none;
+  border-radius: 8px;
+  color: white;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+.btn-block:hover {
+  background-color: #0056b3;
+}
+
+.signin-image {
+  flex: 1;
+  padding: 20px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.signin-image img {
+  width: 150%;
+  height: auto;
+  max-width: 500px;
+  object-fit: cover;
+  border-radius: 15px;
+}
+
+@media (max-width: 768px) {
+  .signin-container {
+    flex-direction: column;
+    text-align: center;
+  }
+
+  .signin-box {
+    max-width: 90%;
+    margin-bottom: 20px;
+  }
+
+  .signin-image img {
+    max-width: 100%;
+  }
+}

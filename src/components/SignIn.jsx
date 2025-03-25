@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import './SignUp.css'; 
 
 const SignIn = () => {
   const [email, setEmail] = useState('');
@@ -10,34 +11,24 @@ const SignIn = () => {
   };
 
   return (
-    <div className="container mt-5">
+    <div className="signin-container">
+    <div className="signin-box">
       <h2>Sign In</h2>
-      <form onSubmit={handleSignIn}>
+      <form>
         <div className="form-group">
-          <label>Email address</label>
-          <input
-            type="email"
-            className="form-control"
-            value={email}
-            onChange={(e) => setEmail(e.target.value)}
-            placeholder="Enter email"
-            required
-          />
+          <input type="email" className="form-control" placeholder="Enter your email" />
         </div>
         <div className="form-group">
-          <label>Password</label>
-          <input
-            type="password"
-            className="form-control"
-            value={password}
-            onChange={(e) => setPassword(e.target.value)}
-            placeholder="Enter password"
-            required
-          />
+          <input type="password" className="form-control" placeholder="Enter your password" />
         </div>
-        <button type="submit" className="btn btn-primary">Sign In</button>
+        <button type="submit" className="btn btn-primary btn-block">Sign In</button>
       </form>
     </div>
+    <div className="signin-image">
+      <img src="/images/image4.jpg" alt="EcoMarket Products" />
+    </div>
+  </div>
+  
   );
 };
 
