@@ -6,8 +6,8 @@ import ProductDetail from './components/ProductDetail';
 import Cart from './components/Cart';
 import Checkout from './components/Checkout';
 import SignIn from './components/SignIn';
-import SignUp from './components/SignUp';
 import Products from './components/Products';
+import 'bootstrap/dist/css/bootstrap.min.css';
 
 function App() {
   return (
@@ -21,7 +21,6 @@ function App() {
           <Route path="/checkout" element={<Checkout />} />
           <Route path="/products" element={<Products />} />
           <Route path="/signin" element={<SignIn />} />
-          <Route path="/signup" element={<SignUp />} />
         </Routes>
       </div>
     </Router>

@@ -1,32 +1,55 @@
-import React from 'react';
-import { Link } from 'react-router-dom';
+import React from "react";
+import { Navbar as BootstrapNavbar, Nav, Container, Dropdown } from "react-bootstrap";
+import { FaHome, FaUser, FaShoppingCart, FaBars, FaUserCircle } from "react-icons/fa";
 
 const Navbar = () => {
   return (
-    <nav className="navbar navbar-expand-lg navbar-light fixed-top bg-light">
-      <div className="container">
-        <Link className="navbar-brand" to="/">EcoMarket</Link>
-        <button className="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
-          <span className="navbar-toggler-icon"></span>
-        </button>
-        <div className="collapse navbar-collapse" id="navbarNav">
-          <ul className="navbar-nav ml-auto">
-            <li className="nav-item">
-              <Link className="nav-link" to="/login">Sign In</Link>
-            </li>
-            <li className="nav-item">
-              <Link className="nav-link" to="/signup">Sign Up</Link>
-            </li>
-            <li className="nav-item">
-              <Link className="nav-link" to="/products">Products</Link>
-            </li>
-            <li className="nav-item">
-              <Link className="nav-link" to="/cart">Cart</Link>
-            </li>
-          </ul>
-        </div>
-      </div>
-    </nav>
+    <BootstrapNavbar expand="lg" bg="dark" variant="dark" className="px-3">
+      <Container>
+        {/* Brand Logo */}
+        <BootstrapNavbar.Brand href="/">  
+        <img 
+    src="/images/Market.png" 
+    alt="EcoMarket" 
+    style={{ height: "40px", marginRight: "10px" }} 
+  />
+          EcoMarket
+        </BootstrapNavbar.Brand>
+
+        {/* Toggle Button for Mobile */}
+        <BootstrapNavbar.Toggle aria-controls="basic-navbar-nav">
+          <FaBars />
+        </BootstrapNavbar.Toggle>
+
+        {/* Navbar Links */}
+        <BootstrapNavbar.Collapse id="basic-navbar-nav">
+          <Nav className="ms-auto">
+            <Nav.Link href="/" className="d-flex align-items-center">
+              <FaHome className="me-1" /> Home
+            </Nav.Link>
+            <Nav.Link href="/about" className="d-flex align-items-center">
+              <FaUser className="me-1" /> About
+            </Nav.Link>
+            <Nav.Link href="/products" className="d-flex align-items-center">
+              <FaShoppingCart className="me-1" /> Shop
+            </Nav.Link>
+
+            {/* Profile Dropdown */}
+            <Dropdown align="end">
+              <Dropdown.Toggle variant="dark" id="profile-dropdown" className="d-flex align-items-center">
+                <FaUserCircle size={22} className="me-1" /> Profile
+              </Dropdown.Toggle>
+              <Dropdown.Menu>
+                <Dropdown.Item href="/signin">My Profile</Dropdown.Item>
+                <Dropdown.Item href="/cart">My Cart</Dropdown.Item>
+                <Dropdown.Divider />
+                <Dropdown.Item href="/logout">Logout</Dropdown.Item>
+              </Dropdown.Menu>
+            </Dropdown>
+          </Nav>
+        </BootstrapNavbar.Collapse>
+      </Container>
+    </BootstrapNavbar>
   );
 };
 
