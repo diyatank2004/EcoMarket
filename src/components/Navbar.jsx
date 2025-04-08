@@ -1,51 +1,63 @@
-import React from "react";
-import { Navbar as BootstrapNavbar, Nav, Container, Dropdown } from "react-bootstrap";
-import { FaHome, FaUser, FaShoppingCart, FaBars, FaUserCircle } from "react-icons/fa";
+import { Navbar as BootstrapNavbar, Nav, Container } from "react-bootstrap";
+import "../css/Navbar.css";
+import React, { useContext } from 'react';
+import { AuthContext } from '../context/AuthContext';
+import { Link, useNavigate } from 'react-router-dom';
+import { FaBars, FaShoppingCart, FaHeart } from 'react-icons/fa';
+import { useCart } from '../context/CartContext';
+import { useWishlist } from "../context/WishlistContext";
 
 const Navbar = () => {
+  const { isAuthenticated, logout } = useContext(AuthContext);
+  const navigate = useNavigate();
+
+  const handleLogout = () => {
+    logout();
+    navigate('/signin');
+  };
+
+const { cartItems } = useCart();
+const { wishlistItems } = useWishlist();
+
+
   return (
-    <BootstrapNavbar expand="lg" bg="dark" variant="dark" className="px-3">
+    <BootstrapNavbar expand="lg" bg="dark" variant="dark" className="fixed-top">
       <Container>
-        {/* Brand Logo */}
-        <BootstrapNavbar.Brand href="/">  
-        <img 
-    src="/images/Market.png" 
-    alt="EcoMarket" 
-    style={{ height: "40px", marginRight: "10px" }} 
-  />
+        <BootstrapNavbar.Brand as={Link} to="/">  
+          <img 
+            src="/images/Market.png" 
+            alt="EcoMarket" 
+            style={{ height: "45px", marginRight: "15px" }} 
+          />
           EcoMarket
         </BootstrapNavbar.Brand>
 
-        {/* Toggle Button for Mobile */}
         <BootstrapNavbar.Toggle aria-controls="basic-navbar-nav">
-          <FaBars />
+          <FaBars className="icon" />
         </BootstrapNavbar.Toggle>
 
-        {/* Navbar Links */}
         <BootstrapNavbar.Collapse id="basic-navbar-nav">
           <Nav className="ms-auto">
-            <Nav.Link href="/" className="d-flex align-items-center">
-              <FaHome className="me-1" /> Home
-            </Nav.Link>
-            <Nav.Link href="/about" className="d-flex align-items-center">
-              <FaUser className="me-1" /> About
-            </Nav.Link>
-            <Nav.Link href="/products" className="d-flex align-items-center">
-              <FaShoppingCart className="me-1" /> Shop
-            </Nav.Link>
+            <Nav.Link as={Link} to="/" className="px-4">Home</Nav.Link>
+            <Nav.Link as={Link} to="/about" className="px-4">About</Nav.Link>
+            <Nav.Link as={Link} to="/products" className="px-4">Shop</Nav.Link>
+            <Nav.Link as={Link} to="/contact" className="px-4">Contact</Nav.Link>
 
-            {/* Profile Dropdown */}
-            <Dropdown align="end">
-              <Dropdown.Toggle variant="dark" id="profile-dropdown" className="d-flex align-items-center">
-                <FaUserCircle size={22} className="me-1" /> Profile
-              </Dropdown.Toggle>
-              <Dropdown.Menu>
-                <Dropdown.Item href="/signin">My Profile</Dropdown.Item>
-                <Dropdown.Item href="/cart">My Cart</Dropdown.Item>
-                <Dropdown.Divider />
-                <Dropdown.Item href="/logout">Logout</Dropdown.Item>
-              </Dropdown.Menu>
-            </Dropdown>
+            {isAuthenticated ? (
+              <>
+               <Nav.Link as={Link} to="/cart" className="px-4 position-relative">
+                    <FaShoppingCart className="me-1"/>
+                  </Nav.Link>
+
+                  <Nav.Link as={Link} to="/wishlist" className="px-4">
+                  <FaHeart className="me-1" /></Nav.Link>
+                <Nav.Link onClick={handleLogout} className="px-4">Logout</Nav.Link>
+              </>
+            ) : (
+              <Nav.Link as={Link} to="/signin" className="hero-btn1">
+                SignIn / SignUp
+              </Nav.Link>
+            )}
           </Nav>
         </BootstrapNavbar.Collapse>
       </Container>

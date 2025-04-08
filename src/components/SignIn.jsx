@@ -1,10 +1,15 @@
-import React, { useState } from 'react';
-import './SignUp.css'; 
+import React, { useState, useContext } from 'react';
+import '../css/Signin.css';
+import { AuthContext } from '../context/AuthContext'; // import AuthContext
 
 const SignIn = () => {
   const [isSignIn, setIsSignIn] = useState(true);
-  const [activeBullet, setActiveBullet] = useState(1);
+  const [signInData, setSignInData] = useState({ email: '', password: '' });
+  const [signUpData, setSignUpData] = useState({ name: '', email: '', password: '' });
   const [inputActive, setInputActive] = useState({});
+  const [loading, setLoading] = useState(false);
+
+  const { login } = useContext(AuthContext); // use login function from AuthContext
 
   const toggleForm = () => {
     setIsSignIn(!isSignIn);
@@ -20,8 +25,55 @@ const SignIn = () => {
     }
   };
 
-  const moveSlider = (index) => {
-    setActiveBullet(index);
+  const handleSignupSubmit = async (e) => {
+    e.preventDefault();
+    setLoading(true);
+    try {
+      const res = await fetch('http://localhost:5000/api/auth/signup', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(signUpData),
+      });
+
+      const data = await res.json();
+      if (res.ok) {
+        alert('Signup successful! You can now sign in.');
+        setIsSignIn(true);
+      } else {
+        alert(data.message || 'Signup failed.');
+      }
+    } catch (err) {
+      alert('Something went wrong');
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  const handleSigninSubmit = async (e) => {
+    e.preventDefault();
+    setLoading(true);
+    try {
+      const res = await fetch('http://localhost:5000/api/auth/signin', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(signInData),
+      });
+
+      const data = await res.json();
+      if (res.ok) {
+        // Store in localStorage and update context
+        const userData = { token: data.token, user: data.user };
+        login(userData); // sets context + localStorage inside AuthContext
+        alert('Sign in successful!');
+        window.location.href = '/';
+      } else {
+        alert(data.message || 'Signin failed.');
+      }
+    } catch (err) {
+      alert('Something went wrong');
+    } finally {
+      setLoading(false);
+    }
   };
 
   return (
@@ -29,8 +81,8 @@ const SignIn = () => {
       <div className="box">
         <div className="inner-box">
           <div className="forms-wrap">
-            {isSignIn && (
-              <form action="index.html" autoComplete="off" className="sign-in-form">
+            {isSignIn ? (
+              <form onSubmit={handleSigninSubmit} autoComplete="off" className="sign-in-form">
                 <div className="logo">
                   <img src="./images/Market.png" alt="EcoMarket" />
                   <h4>EcoMarket</h4>
@@ -38,51 +90,42 @@ const SignIn = () => {
 
                 <div className="heading">
                   <h2>Welcome Back</h2>
-                  <h6>Not registered yet? </h6>
-                  <a href="#" className="toggle" onClick={toggleForm}>
-                    Sign up
-                  </a>
+                  <h6>Not registered yet?</h6>
+                  <a href="#" className="toggle" onClick={toggleForm}>Sign up</a>
                 </div>
 
                 <div className="actual-form">
-                  <div className={`input-wrap ${inputActive.name ? 'active' : ''}`}>
+                  <div className={`input-wrap ${inputActive.email ? 'active' : ''}`}>
                     <input
-                      type="text"
-                      minLength="4"
+                      type="email"
                       className="input-field"
-                      autoComplete="off"
                       required
-                      onFocus={() => handleFocus('name')}
-                      onBlur={(e) => handleBlur('name', e.target.value)}
+                      value={signInData.email}
+                      onChange={(e) => setSignInData({ ...signInData, email: e.target.value })}
+                      onFocus={() => handleFocus('email')}
+                      onBlur={(e) => handleBlur('email', e.target.value)}
                     />
-                    <label>Username</label>
+                    <label>Email</label>
                   </div>
 
                   <div className={`input-wrap ${inputActive.password ? 'active' : ''}`}>
                     <input
                       type="password"
-                      minLength="4"
                       className="input-field"
-                      autoComplete="off"
                       required
+                      value={signInData.password}
+                      onChange={(e) => setSignInData({ ...signInData, password: e.target.value })}
                       onFocus={() => handleFocus('password')}
                       onBlur={(e) => handleBlur('password', e.target.value)}
                     />
                     <label>Password</label>
                   </div>
 
-                  <input type="submit" value="Sign In" className="sign-btn" />
-
-                  <p className="text">
-                    Forgotten your password or your login details?{' '}
-                    <a href="#">Get help</a> signing in
-                  </p>
+                  <input type="submit" value={loading ? 'Signing in...' : 'Sign In'} className="sign-btn" />
                 </div>
               </form>
-            )}
-
-            {!isSignIn && (
-              <form action="index.html" autoComplete="off" className="sign-up-form">
+            ) : (
+              <form onSubmit={handleSignupSubmit} autoComplete="off" className="sign-up-form">
                 <div className="logo">
                   <img src="./images/Market.png" alt="EcoMarket" />
                   <h4>EcoMarket</h4>
@@ -90,22 +133,20 @@ const SignIn = () => {
 
                 <div className="heading">
                   <h2>Get Started</h2>
-                  <h6>Already have an account? </h6>
-                  <a href="#" className="toggle" onClick={toggleForm}>
-                    Sign in
-                  </a>
+                  <h6>Already have an account?</h6>
+                  <a href="#" className="toggle" onClick={toggleForm}>Sign in</a>
                 </div>
 
                 <div className="actual-form">
-                  <div className={`input-wrap ${inputActive.signUpName ? 'active' : ''}`}>
+                  <div className={`input-wrap ${inputActive.name ? 'active' : ''}`}>
                     <input
                       type="text"
-                      minLength="4"
                       className="input-field"
-                      autoComplete="off"
                       required
-                      onFocus={() => handleFocus('signUpName')}
-                      onBlur={(e) => handleBlur('signUpName', e.target.value)}
+                      value={signUpData.name}
+                      onChange={(e) => setSignUpData({ ...signUpData, name: e.target.value })}
+                      onFocus={() => handleFocus('name')}
+                      onBlur={(e) => handleBlur('name', e.target.value)}
                     />
                     <label>Username</label>
                   </div>
@@ -114,33 +155,29 @@ const SignIn = () => {
                     <input
                       type="email"
                       className="input-field"
-                      autoComplete="off"
                       required
+                      value={signUpData.email}
+                      onChange={(e) => setSignUpData({ ...signUpData, email: e.target.value })}
                       onFocus={() => handleFocus('email')}
                       onBlur={(e) => handleBlur('email', e.target.value)}
                     />
                     <label>Email</label>
                   </div>
 
-                  <div className={`input-wrap ${inputActive.signUpPassword ? 'active' : ''}`}>
+                  <div className={`input-wrap ${inputActive.password ? 'active' : ''}`}>
                     <input
                       type="password"
-                      minLength="4"
                       className="input-field"
-                      autoComplete="off"
                       required
-                      onFocus={() => handleFocus('signUpPassword')}
-                      onBlur={(e) => handleBlur('signUpPassword', e.target.value)}
+                      value={signUpData.password}
+                      onChange={(e) => setSignUpData({ ...signUpData, password: e.target.value })}
+                      onFocus={() => handleFocus('password')}
+                      onBlur={(e) => handleBlur('password', e.target.value)}
                     />
                     <label>Password</label>
                   </div>
 
-                  <input type="submit" value="Sign Up" className="sign-btn" />
-
-                  <p className="text">
-                    By signing up, I agree to the <a href="#">Terms of Services</a> and{' '}
-                    <a href="#">Privacy Policy</a>
-                  </p>
+                  <input type="submit" value={loading ? 'Signing up...' : 'Sign Up'} className="sign-btn" />
                 </div>
               </form>
             )}
@@ -148,11 +185,10 @@ const SignIn = () => {
 
           {/* Carousel */}
           <div className="carousel">
-        <div className="images-wrapper">
-          <img src="./images/image2.png" className="image show" alt="Main Image" />
-        </div>
-      </div>
-
+            <div className="images-wrapper">
+              <img src="./images/image2.png" className="image show" alt="Main Image" />
+            </div>
+          </div>
         </div>
       </div>
     </main>

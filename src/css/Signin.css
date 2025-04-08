@@ -17,7 +17,7 @@ main {
   width: 100%;
   min-height: 100vh;
   overflow: hidden;
-  background-color: #f3c4c0;
+  background-color: #55c455;
   padding: 2rem;
   display: flex;
   align-items: center;
@@ -113,27 +113,7 @@ form.sign-up-form {
 }
 
 .toggle:hover {
-  color: #ee968e;
-}
-
-.input-wrap {
-  position: relative;
-  height: 37px;
-  margin-bottom: 2rem;
-}
-
-.input-field {
-  position: absolute;
-  width: 100%;
-  height: 100%;
-  background: none;
-  border: none;
-  outline: none;
-  border-bottom: 1px solid #bbb;
-  padding: 0;
-  font-size: 0.95rem;
-  color: #151111;
-  transition: 0.4s;
+  color: #55c455;
 }
 
 label {
@@ -160,7 +140,7 @@ label {
   display: inline-block;
   width: 100%;
   height: 43px;
-  background-color: #151111;
+  background-color: #000000;
   color: #fff;
   border: none;
   cursor: pointer;
@@ -171,7 +151,7 @@ label {
 }
 
 .sign-btn:hover {
-  background-color: #ee968e;
+  background-color: #55c455;
 }
 
 .text {
@@ -185,7 +165,7 @@ label {
 }
 
 .text a:hover {
-  color: #ee968e;
+  color: #55c455;
 }
 
 main.sign-up-mode form.sign-in-form {
@@ -212,7 +192,7 @@ main.sign-up-mode .carousel {
   width: 55%;
   left: 45%;
   top: 0;
-  background-color:  #f3c4c0;
+  background-color:  #55c455;
   border-radius: 2rem;
   display: grid;
   grid-template-rows: auto 1fr;
@@ -228,7 +208,7 @@ main.sign-up-mode .carousel {
 }
 
 .image {
-  width: 100%;
+  width: 120%;
   grid-column: 1/2;
   grid-row: 1/2;
   opacity: 0;
@@ -391,4 +371,39 @@ main.sign-up-mode .carousel {
   form {
     padding: 1rem 2rem 1.5rem;
   }
+}
+
+.input-wrap {
+  position: relative;
+  margin-bottom: 2rem;
+}
+
+.input-field {
+  width: 100%;
+  padding: 1.2rem 1rem 0.4rem;
+  font-size: 1rem;
+  border: 1px solid #ccc;
+  border-radius: 0.5rem;
+  background: transparent;
+  outline: none;
+}
+
+.input-wrap label {
+  position: absolute;
+  top: 1rem;
+  left: 1rem;
+  font-size: 1rem;
+  color: #777;
+  pointer-events: none;
+  transition: 0.3s ease;
+}
+
+.input-wrap.active label,
+.input-field:focus + label {
+  top: 0.4rem;
+  left: 1rem;
+  font-size: 0.75rem;
+  color: #4caf50; /* active color */
+  background-color: white;
+  padding: 0 0.25rem;
 }

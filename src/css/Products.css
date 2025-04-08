@@ -1,0 +1,18 @@
+.products-page {
+  background-color: #f9f9f9;
+}
+
+.product-card {
+  border-radius: 16px;
+  overflow: hidden;
+  transition: transform 0.3s ease;
+}
+
+.product-card:hover {
+  transform: translateY(-5px);
+}
+
+.product-image {
+  height: 200px;
+  object-fit: cover;
+}

@@ -1,23 +1,43 @@
-import React from 'react';
-import { useParams } from 'react-router-dom';
+import React, { useEffect, useState } from "react";
+import { useParams } from "react-router-dom";
+import axios from "axios";
+import { Container, Row, Col, Button } from "react-bootstrap";
 
 function ProductDetail() {
-  const { id } = useParams(); 
+  const { id } = useParams();
+  const [product, setProduct] = useState(null);
+
+  useEffect(() => {
+    const fetchProduct = async () => {
+      try {
+        const res = await axios.get(`http://localhost:5000/api/products/${id}`);
+        setProduct(res.data);
+      } catch (err) {
+        console.error("Error fetching product:", err);
+      }
+    };
+
+    fetchProduct();
+  }, [id]);
+
+  if (!product) {
+    return <Container className="mt-5 pt-5"><p>Loading product details...</p></Container>;
+  }
+
   return (
-    <div className="container mt-5">
-      <h1>Product Details</h1>
-      <div className="row">
-        <div className="col-md-6">
-          <img src={`product${id}.jpg`} alt={`Product ${id}`} className="img-fluid" />
-        </div>
-        <div className="col-md-6">
-          <h2>Eco-Friendly Product {id}</h2>
-          <p>Price: $25.00</p>
-          <p>Description: This is an eco-friendly product that you will love.</p>
-          <button className="btn btn-primary">Add to Cart</button>
-        </div>
-      </div>
-    </div>
+    <Container className="mt-5 pt-5">
+      <Row className="align-items-center">
+        <Col md={6}>
+          <img src={product.image} alt={product.title} className="img-fluid rounded shadow" />
+        </Col>
+        <Col md={6}>
+          <h2>{product.title}</h2>
+          <p className="text-muted">₹{product.price}</p>
+          <p>{product.description}</p>
+          <Button variant="success">Add to Cart</Button>
+        </Col>
+      </Row>
+    </Container>
   );
 }
 
